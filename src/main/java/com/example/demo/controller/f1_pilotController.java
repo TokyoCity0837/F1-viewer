@@ -11,20 +11,17 @@ import jakarta.validation.Valid;
 @RequestMapping("/pilots")
 public class f1_pilotController {
 
-
-
-
-    @PutMapping("/{id}")
-public f1_pilot updatePilot(@PathVariable Long id, @Valid @RequestBody DriverRequest request) {
-    return pilotService.updatePilot(id, request);
-}
-
-
     private final f1_pilotService pilotService;
 
     public f1_pilotController(f1_pilotService pilotService) {
         this.pilotService = pilotService;
     }
+
+    @PutMapping("/{id}")
+    public f1_pilot updatePilot(@PathVariable Long id, @Valid @RequestBody DriverRequest request) {
+    return pilotService.updatePilot(id, request);
+}
+
 
     @GetMapping
     public List<f1_pilot> getAllPilots() {

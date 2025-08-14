@@ -13,16 +13,16 @@ public class f1_teamController {
 
     private final f1_teamService teamService;
 
+    public f1_teamController(f1_teamService teamService) {
+        this.teamService = teamService;
+    }
+
 
     @PutMapping("/{id}")
     public f1_team updateTeam(@PathVariable Integer id, @Valid @RequestBody TeamRequest request) {
     return teamService.updateTeam(id, request);
-}
-
-
-    public f1_teamController(f1_teamService teamService) {
-        this.teamService = teamService;
     }
+
 
     @GetMapping
     public List<f1_team> getAllTeams() {
