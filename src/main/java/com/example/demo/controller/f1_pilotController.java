@@ -1,15 +1,24 @@
 package com.example.demo.controller;
 
 import java.util.List;
-
 import org.springframework.web.bind.annotation.*;
-
 import com.example.demo.model.f1_pilot;
 import com.example.demo.service.f1_pilotService;
+import com.example.demo.DriverRequest;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/pilots")
 public class f1_pilotController {
+
+
+
+
+    @PutMapping("/{id}")
+public f1_pilot updatePilot(@PathVariable Long id, @Valid @RequestBody DriverRequest request) {
+    return pilotService.updatePilot(id, request);
+}
+
 
     private final f1_pilotService pilotService;
 
@@ -23,17 +32,17 @@ public class f1_pilotController {
     }
 
     @PostMapping
-    public f1_pilot createPilot(@RequestBody f1_pilot pilot) {
-        return pilotService.savePilot(pilot);
+    public f1_pilot createPilot(@Valid @RequestBody DriverRequest request) {
+        return pilotService.savePilot(request);
     }
 
     @GetMapping("/{id}")
-    public f1_pilot getPilotById(@PathVariable Integer id) {
+    public f1_pilot getPilotById(@PathVariable Long id) {
         return pilotService.getPilotById(id);
     }
 
     @DeleteMapping("/{id}")
-    public void deletePilotById(@PathVariable Integer id) {
+    public void deletePilotById(@PathVariable Long id) {
         pilotService.deletePilotById(id);
     }
 }

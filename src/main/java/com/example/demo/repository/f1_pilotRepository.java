@@ -6,4 +6,4 @@ import org.springframework.stereotype.Repository;
 
 
 @Repository
-public interface f1_pilotRepository extends JpaRepository <f1_pilot, Integer> {};
+public interface f1_pilotRepository extends JpaRepository <f1_pilot, Long> {};

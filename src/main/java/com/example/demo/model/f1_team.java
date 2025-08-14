@@ -40,10 +40,10 @@ public class f1_team {
     public void setTeamId(int teamId) { this.teamId = teamId; }
 
     public String getTeamName() { return teamName; }
-    public void setTeamName(String teamName) { this.teamName = teamName; }
+    public void setName(String teamName) { this.teamName = teamName; }
 
-    public String getBaseCountry() { return baseCountry; }
-    public void setBaseCountry(String baseCountry) { this.baseCountry = baseCountry; }
+    public String getCountry() { return baseCountry; }
+    public void setCountry(String baseCountry) { this.baseCountry = baseCountry; }
 
     public String getTeamPrinciple() { return teamPrinciple; }
     public void setTeamPrinciple(String teamPrinciple) { this.teamPrinciple = teamPrinciple; }
