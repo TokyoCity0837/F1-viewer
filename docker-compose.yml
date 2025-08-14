@@ -1,0 +1,32 @@
+version: "3.9"
+
+services:
+  db:
+    image: mysql:8.1
+    container_name: f1_analysis
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: Dry7249662001
+      MYSQL_DATABASE: f1_analysis
+      MYSQL_USER: f1_user
+      MYSQL_PASSWORD: Dry7249662001!
+    ports:
+      - "3306:3306"
+    volumes:
+      - f1-db-data:/var/lib/mysql
+
+  app:
+    build: .
+    container_name: f1-app
+    restart: always
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/f1_analysis
+      SPRING_DATASOURCE_USERNAME: f1_user
+      SPRING_DATASOURCE_PASSWORD: Dry7249662001!
+    depends_on:
+      - db
+
+volumes:
+  f1-db-data:
