@@ -1,7 +1,7 @@
-package com.example.demo.repository;
+package com.example.F1analysis.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import com.example.demo.model.f1_team;
+import com.example.F1analysis.model.f1_team;
 import org.springframework.stereotype.Repository;
 
 @Repository
