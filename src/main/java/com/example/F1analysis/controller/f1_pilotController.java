@@ -1,10 +1,12 @@
-package com.example.demo.controller;
+package com.example.F1analysis.controller;
 
 import java.util.List;
 import org.springframework.web.bind.annotation.*;
-import com.example.demo.model.f1_pilot;
-import com.example.demo.service.f1_pilotService;
-import com.example.demo.DriverRequest;
+
+import com.example.F1analysis.dto.DriverRequest;
+import com.example.F1analysis.model.f1_pilot;
+import com.example.F1analysis.service.f1_pilotService;
+
 import jakarta.validation.Valid;
 
 @RestController

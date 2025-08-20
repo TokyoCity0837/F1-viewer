@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.F1analysis.dto;
 
 import jakarta.validation.constraints.*;
 import java.time.LocalDate;
