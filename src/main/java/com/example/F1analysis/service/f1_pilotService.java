@@ -3,7 +3,7 @@ package com.example.F1analysis.service;
 import java.util.List;
 import org.springframework.stereotype.Service;
 import com.example.F1analysis.repository.f1_pilotRepository;
-import com.example.F1analysis.dto.DriverRequest;
+import com.example.F1analysis.dto.PilotRequest;
 import com.example.F1analysis.model.f1_pilot;
 import com.example.F1analysis.model.f1_team;
 import com.example.F1analysis.repository.f1_teamRepository;
@@ -27,7 +27,7 @@ public class f1_pilotService {
     }
 
 
-    public f1_pilot savePilot(DriverRequest request) {
+    public f1_pilot savePilot(PilotRequest request) {
         f1_team team = teamRepository.findById(request.getTeamId())
                 .orElseThrow(() -> new EntityNotFoundException("Команда с ID " + request.getTeamId() + " не найдена"));
 
@@ -43,7 +43,7 @@ public class f1_pilotService {
         return pilotRepository.save(pilot);
     }
 
-    public f1_pilot updatePilot(Long id, DriverRequest request) {
+    public f1_pilot updatePilot(Long id, PilotRequest request) {
         f1_pilot existingPilot = pilotRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Пилот с ID " + id + " не найден"));
     

@@ -4,7 +4,7 @@ import jakarta.validation.constraints.*;
 import java.time.LocalDate;
 import java.time.Period;
 
-public class DriverRequest {
+public class PilotRequest {
 
     @Positive(message = "ID должен быть положительным числом")
     private int id;
@@ -31,7 +31,7 @@ public class DriverRequest {
     @Positive(message = "ID команды должен быть положительным числом")
     private int teamId;
 
-    public DriverRequest() {}
+    public PilotRequest() {}
 
     public int getId() {
         return id;

@@ -1,6 +1,6 @@
 package com.example.F1analysis.controller;
 
-import com.example.F1analysis.dto.DriverRequest;
+import com.example.F1analysis.dto.PilotRequest;
 import com.example.F1analysis.model.f1_pilot;
 import com.example.F1analysis.service.f1_pilotService;
 import org.junit.jupiter.api.BeforeEach;
@@ -55,7 +55,7 @@ class f1_pilotControllerTest {
 
     @Test
     void testCreatePilot() {
-        DriverRequest request = new DriverRequest();
+        PilotRequest request = new PilotRequest();
         f1_pilot pilot = new f1_pilot();
         when(pilotService.savePilot(request)).thenReturn(pilot);
 
@@ -67,7 +67,7 @@ class f1_pilotControllerTest {
 
     @Test
     void testUpdatePilot() {
-        DriverRequest request = new DriverRequest();
+        PilotRequest request = new PilotRequest();
         f1_pilot pilot = new f1_pilot();
         when(pilotService.updatePilot(1L, request)).thenReturn(pilot);
 
