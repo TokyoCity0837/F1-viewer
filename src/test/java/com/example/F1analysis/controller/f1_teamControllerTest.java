@@ -18,14 +18,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 class f1_teamControllerTest {
 
     @Mock
-    private f1_teamService teamService; // мокируем сервис
+    private f1_teamService teamService; 
 
     @InjectMocks
-    private f1_teamController controller; // контроллер для теста
+    private f1_teamController controller; 
 
     @BeforeEach
     void setUp() {
-        MockitoAnnotations.openMocks(this); // инициализация моков
+        MockitoAnnotations.openMocks(this); 
     }
 
     @Test
