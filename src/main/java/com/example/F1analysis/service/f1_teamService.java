@@ -23,8 +23,8 @@ public class f1_teamService {
 
     public f1_team saveTeam(TeamRequest request) {
         f1_team team = new f1_team();
-        team.setName(request.getName());
-        team.setCountry(request.getCountry());
+        team.setName(request.getTeamName());
+        team.setCountry(request.getBaseCountry());
         return teamRepository.save(team);
     }
 
@@ -37,8 +37,8 @@ public class f1_teamService {
         f1_team existingTeam = teamRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Команда с ID " + id + " не найдена"));
     
-        existingTeam.setName(request.getName());
-        existingTeam.setCountry(request.getCountry());
+        existingTeam.setName(request.getTeamName());
+        existingTeam.setCountry(request.getBaseCountry());
     
         return teamRepository.save(existingTeam);
     }
