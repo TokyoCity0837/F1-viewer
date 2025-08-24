@@ -40,7 +40,7 @@ public class f1_team {
     public void setTeamId(int teamId) { this.teamId = teamId; }
 
     public String getTeamName() { return teamName; }
-    public void setName(String teamName) { this.teamName = teamName; }
+    public void setTeamName(String teamName) { this.teamName = teamName; }
 
     public String getCountry() { return baseCountry; }
     public void setCountry(String baseCountry) { this.baseCountry = baseCountry; }

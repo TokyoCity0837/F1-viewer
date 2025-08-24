@@ -20,7 +20,7 @@ public class f1_pilotController {
     }
 
     @PutMapping("/{id}")
-    public f1_pilot updatePilot(@PathVariable Long id, @Valid @RequestBody PilotRequest request) {
+    public f1_pilot updatePilot(@PathVariable Integer id, @Valid @RequestBody PilotRequest request) {
     return pilotService.updatePilot(id, request);
 }
 
@@ -36,12 +36,12 @@ public class f1_pilotController {
     }
 
     @GetMapping("/{id}")
-    public f1_pilot getPilotById(@PathVariable Long id) {
+    public f1_pilot getPilotById(@PathVariable Integer id) {
         return pilotService.getPilotById(id);
     }
 
     @DeleteMapping("/{id}")
-    public void deletePilotById(@PathVariable Long id) {
+    public void deletePilotById(@PathVariable Integer id) {
         pilotService.deletePilotById(id);
     }
 }

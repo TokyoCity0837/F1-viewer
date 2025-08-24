@@ -45,12 +45,12 @@ class f1_pilotControllerTest {
     @Test
     void testGetPilotById() {
         f1_pilot pilot = new f1_pilot();
-        when(pilotService.getPilotById(1L)).thenReturn(pilot);
+        when(pilotService.getPilotById(1)).thenReturn(pilot);
 
-        f1_pilot result = controller.getPilotById(1L);
+        f1_pilot result = controller.getPilotById(1);
 
         assertThat(result).isNotNull();
-        verify(pilotService, times(1)).getPilotById(1L);
+        verify(pilotService, times(1)).getPilotById(1);
     }
 
     @Test
@@ -69,20 +69,20 @@ class f1_pilotControllerTest {
     void testUpdatePilot() {
         PilotRequest request = new PilotRequest();
         f1_pilot pilot = new f1_pilot();
-        when(pilotService.updatePilot(1L, request)).thenReturn(pilot);
+        when(pilotService.updatePilot(1, request)).thenReturn(pilot);
 
-        f1_pilot result = controller.updatePilot(1L, request);
+        f1_pilot result = controller.updatePilot(1, request);
 
         assertThat(result).isNotNull();
-        verify(pilotService, times(1)).updatePilot(1L, request);
+        verify(pilotService, times(1)).updatePilot(1, request);
     }
 
     @Test
     void testDeletePilotById() {
-        doNothing().when(pilotService).deletePilotById(1L);
+        doNothing().when(pilotService).deletePilotById(1);
 
-        controller.deletePilotById(1L);
+        controller.deletePilotById(1);
 
-        verify(pilotService, times(1)).deletePilotById(1L);
+        verify(pilotService, times(1)).deletePilotById(1);
     }
 }

@@ -10,7 +10,7 @@ public class f1_pilot {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long pilotId;
+    private Integer pilotId;
 
     @Column(name = "first_name", nullable = false, length = 50)
     private String firstName;
@@ -43,8 +43,8 @@ public class f1_pilot {
 
     }
 
-    public Long getPilotId() { return pilotId; }
-    public void setPilotId(Long pilotId) { this.pilotId = pilotId; }
+    public Integer getPilotId() { return pilotId; }
+    public void setPilotId(Integer pilotId) { this.pilotId = pilotId; }
 
     public String getFirstName() { return firstName; }
     public void setFirstName(String firstName) { this.firstName = firstName; }

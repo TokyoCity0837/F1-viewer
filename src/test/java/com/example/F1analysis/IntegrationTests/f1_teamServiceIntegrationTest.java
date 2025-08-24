@@ -35,5 +35,5 @@ public class f1_teamServiceIntegrationTest {
         assertThat(savedTeam.getTeamPrinciple()).isEqualTo("Fred Vasseur");
         assertThat(savedTeam.getTeamFoundation()).isEqualTo(1929);
         assertThat(savedTeam.getTeamChampionships()).isEqualTo(16);
-    }
-}
+        }
+    }   
