@@ -1,5 +1,6 @@
 package com.example.F1analysis.IntegrationTests;
 
+import com.example.F1analysis.F1AnalysisApplication;
 import com.example.F1analysis.dto.TeamRequest;
 import com.example.F1analysis.model.f1_team;
 import com.example.F1analysis.service.f1_teamService;
@@ -8,10 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
-
 import static org.assertj.core.api.Assertions.assertThat;
 
-@SpringBootTest
+@SpringBootTest(classes = F1AnalysisApplication.class)
 @ActiveProfiles("test")
 public class f1_teamServiceIntegrationTest {
 
@@ -35,5 +35,5 @@ public class f1_teamServiceIntegrationTest {
         assertThat(savedTeam.getTeamPrinciple()).isEqualTo("Fred Vasseur");
         assertThat(savedTeam.getTeamFoundation()).isEqualTo(1929);
         assertThat(savedTeam.getTeamChampionships()).isEqualTo(16);
-        }
-    }   
+    }
+}

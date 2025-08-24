@@ -1,10 +1,8 @@
 package com.example.F1analysis.service;
 
 import java.util.List;
-import java.sql.Date;
 import org.springframework.stereotype.Service;
 import jakarta.persistence.EntityNotFoundException;
-
 import com.example.F1analysis.model.f1_pilot;
 import com.example.F1analysis.model.f1_team;
 import com.example.F1analysis.dto.PilotRequest;
@@ -22,44 +20,41 @@ public class f1_pilotService {
         this.teamRepository = teamRepository;
     }
 
-
     public List<f1_pilot> getAllPilots() {
         return pilotRepository.findAll();
     }
 
     public f1_pilot savePilot(PilotRequest request) {
-        f1_team team = teamRepository.findById((Integer) request.getTeamId())
+        f1_team team = teamRepository.findById(request.getTeamId())
                 .orElseThrow(() -> new EntityNotFoundException("Команда с ID " + request.getTeamId() + " не найдена"));
 
         f1_pilot pilot = new f1_pilot();
         pilot.setFirstName(request.getFirstName());
         pilot.setLastName(request.getLastName());
         pilot.setNationality(request.getCountry());
-        pilot.setBirthDate(Date.valueOf(request.getBirthDate()));
+        pilot.setBirthDate(request.getBirthDate());
         pilot.setNumber(request.getCarNumber());
         pilot.setTeam(team);
 
         return pilotRepository.save(pilot);
     }
 
-
     public f1_pilot updatePilot(Integer id, PilotRequest request) {
         f1_pilot existingPilot = pilotRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Пилот с ID " + id + " не найден"));
 
-        f1_team team = teamRepository.findById((Integer) request.getTeamId())
+        f1_team team = teamRepository.findById(request.getTeamId())
                 .orElseThrow(() -> new EntityNotFoundException("Команда с ID " + request.getTeamId() + " не найдена"));
 
         existingPilot.setFirstName(request.getFirstName());
         existingPilot.setLastName(request.getLastName());
         existingPilot.setNationality(request.getCountry());
-        existingPilot.setBirthDate(Date.valueOf(request.getBirthDate()));
+        existingPilot.setBirthDate(request.getBirthDate());
         existingPilot.setNumber(request.getCarNumber());
         existingPilot.setTeam(team);
 
         return pilotRepository.save(existingPilot);
     }
-
 
     public f1_pilot getPilotById(Integer id) {
         return pilotRepository.findById(id)

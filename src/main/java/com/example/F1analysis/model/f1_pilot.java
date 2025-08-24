@@ -1,6 +1,8 @@
 package com.example.F1analysis.model;
 
 
+import java.time.LocalDate;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -22,7 +24,7 @@ public class f1_pilot {
     private String nationality;
 
     @Column(name = "birth_date")
-    private java.sql.Date birthDate;
+    private LocalDate birthDate;
 
     @Column(name = "number", nullable = false)
     private Integer number;
@@ -32,7 +34,7 @@ public class f1_pilot {
     private f1_team team;
 
     public f1_pilot(){};
-    public f1_pilot(String firstName, String lastName, String nationality, java.sql.Date birthDate, Integer number, f1_team team){
+    public f1_pilot(String firstName, String lastName, String nationality, LocalDate birthDate, Integer number, f1_team team){
 
         this.firstName = firstName;
         this.lastName = lastName;
@@ -52,12 +54,12 @@ public class f1_pilot {
     public String getLastName() { return lastName; }
     public void setLastName(String lastName) { this.lastName = lastName; }
 
-    public String getCountry() { return nationality; }
+    public String getNationality() { return nationality; }
     public void setNationality(String nationality) { this.nationality = nationality; }
 
-    public java.sql.Date getBirthDate() { return birthDate; }
-    public void setBirthDate(java.sql.Date birthDate) { this.birthDate = birthDate; }
-
+    public LocalDate getBirthDate() { return birthDate; }
+    public void setBirthDate(LocalDate birthDate) { this.birthDate = birthDate; }
+    
     public Integer getCarNumber() { return number; }
     public void setNumber(Integer number) { this.number = number; }
 

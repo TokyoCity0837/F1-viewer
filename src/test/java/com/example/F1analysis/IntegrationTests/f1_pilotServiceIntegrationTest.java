@@ -1,5 +1,6 @@
 package com.example.F1analysis.IntegrationTests;
 
+import com.example.F1analysis.F1AnalysisApplication;
 import com.example.F1analysis.dto.PilotRequest;
 import com.example.F1analysis.dto.TeamRequest;
 import com.example.F1analysis.model.f1_pilot;
@@ -11,13 +12,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
-
 import java.time.LocalDate;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-
-@SpringBootTest
+@SpringBootTest(classes = F1AnalysisApplication.class)
 @ActiveProfiles("test")
 public class f1_pilotServiceIntegrationTest {
 
@@ -46,21 +45,13 @@ public class f1_pilotServiceIntegrationTest {
         pilotRequest.setCarNumber(16);
         pilotRequest.setTeamId(savedTeam.getTeamId());
 
-        PilotRequest driverRequest = new PilotRequest();
-        driverRequest.setFirstName(pilotRequest.getFirstName());
-        driverRequest.setLastName(pilotRequest.getLastName());
-        driverRequest.setCountry(pilotRequest.getCountry());
-        driverRequest.setBirthDate(pilotRequest.getBirthDate());
-        driverRequest.setCarNumber(pilotRequest.getCarNumber());
-        driverRequest.setTeamId(pilotRequest.getTeamId());
-
-        f1_pilot savedPilot = pilotService.savePilot(driverRequest);
+        f1_pilot savedPilot = pilotService.savePilot(pilotRequest);
 
         assertThat(savedPilot.getPilotId()).isNotNull();
         assertThat(savedPilot.getFirstName()).isEqualTo("Charles");
         assertThat(savedPilot.getLastName()).isEqualTo("Leclerc");
-        assertThat(savedPilot.getCountry()).isEqualTo("Monaco");
-        assertThat(savedPilot.getBirthDate()).isEqualTo(java.sql.Date.valueOf(LocalDate.of(1997, 10, 16)));
+        assertThat(savedPilot.getNationality()).isEqualTo("Monaco");
+        assertThat(savedPilot.getBirthDate()).isEqualTo(LocalDate.of(1997, 10, 16));
         assertThat(savedPilot.getCarNumber()).isEqualTo(16);
         assertThat(savedPilot.getTeam().getTeamName()).isEqualTo("Ferrari");
     }
