@@ -3,7 +3,7 @@ package com.example.F1analysis.controller;
 import java.util.List;
 import org.springframework.web.bind.annotation.*;
 
-import com.example.F1analysis.dto.DriverRequest;
+import com.example.F1analysis.dto.PilotRequest;
 import com.example.F1analysis.model.f1_pilot;
 import com.example.F1analysis.service.f1_pilotService;
 
@@ -20,7 +20,7 @@ public class f1_pilotController {
     }
 
     @PutMapping("/{id}")
-    public f1_pilot updatePilot(@PathVariable Long id, @Valid @RequestBody DriverRequest request) {
+    public f1_pilot updatePilot(@PathVariable Long id, @Valid @RequestBody PilotRequest request) {
     return pilotService.updatePilot(id, request);
 }
 
@@ -31,7 +31,7 @@ public class f1_pilotController {
     }
 
     @PostMapping
-    public f1_pilot createPilot(@Valid @RequestBody DriverRequest request) {
+    public f1_pilot createPilot(@Valid @RequestBody PilotRequest request) {
         return pilotService.savePilot(request);
     }
 

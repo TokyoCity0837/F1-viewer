@@ -52,13 +52,13 @@ public class f1_pilot {
     public String getLastName() { return lastName; }
     public void setLastName(String lastName) { this.lastName = lastName; }
 
-    public String getNationality() { return nationality; }
+    public String getCountry() { return nationality; }
     public void setNationality(String nationality) { this.nationality = nationality; }
 
     public java.sql.Date getBirthDate() { return birthDate; }
     public void setBirthDate(java.sql.Date birthDate) { this.birthDate = birthDate; }
 
-    public Integer getNumber() { return number; }
+    public Integer getCarNumber() { return number; }
     public void setNumber(Integer number) { this.number = number; }
 
     public f1_team getTeam() { return team; }
