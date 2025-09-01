@@ -13,11 +13,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
+import org.testcontainers.containers.MySQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
-import org.testcontainers.containers.MySQLContainer;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -29,10 +30,10 @@ public class f1_pilotServiceIntegrationTest {
     @Container
     @SuppressWarnings("resource")
     static MySQLContainer<?> mysql = new MySQLContainer<>("mysql:8.0.36")
-    .withDatabaseName("f1_test_db")
-    .withUsername("testuser")
-    .withPassword("testpass")
-    .withCreateContainerCmdModifier(cmd -> cmd.withPlatform("linux/amd64"));
+        .withDatabaseName("f1_test_db")
+        .withUsername("testuser")
+        .withPassword("testpass")
+        .withCreateContainerCmdModifier(cmd -> cmd.withPlatform("linux/amd64"));
 
     @DynamicPropertySource
     static void overrideProps(DynamicPropertyRegistry registry) {
@@ -40,7 +41,6 @@ public class f1_pilotServiceIntegrationTest {
         registry.add("spring.datasource.username", mysql::getUsername);
         registry.add("spring.datasource.password", mysql::getPassword);
     }
-    
 
     @Autowired
     private f1_pilotService pilotService;
@@ -48,33 +48,66 @@ public class f1_pilotServiceIntegrationTest {
     @Autowired
     private f1_teamService teamService;
 
+    private f1_team createTeam(String name) {
+        TeamRequest request = new TeamRequest();
+        request.setTeamName(name);
+        request.setBaseCountry("UK");
+        request.setTeamPrinciple("Principle");
+        request.setTeamFoundation(1960);
+        request.setTeamChampionships(8);
+        return teamService.saveTeam(request);
+    }
+
+    private PilotRequest createPilotRequest(String firstName, String lastName, int teamId) {
+        PilotRequest request = new PilotRequest();
+        request.setFirstName(firstName);
+        request.setLastName(lastName);
+        request.setCountry("UK");
+        request.setBirthDate(LocalDate.of(2000, 1, 1));
+        request.setCarNumber(44);
+        request.setTeamId(teamId);
+        return request;
+    }
+
     @Test
-    void testSavePilotViaService() {
-        TeamRequest teamRequest = new TeamRequest();
-        teamRequest.setTeamName("Ferrari");
-        teamRequest.setBaseCountry("Italy");
-        teamRequest.setTeamPrinciple("Fred Vasseur");
-        teamRequest.setTeamFoundation(1929);
-        teamRequest.setTeamChampionships(16);
+    void testCreateAndGetPilot() {
+        f1_team team = createTeam("Mercedes");
+        PilotRequest request = createPilotRequest("Lewis", "Hamilton", team.getTeamId());
+        f1_pilot savedPilot = pilotService.savePilot(request);
 
-        f1_team savedTeam = teamService.saveTeam(teamRequest);
+        f1_pilot fetchedPilot = pilotService.getPilotById(savedPilot.getPilotId());
+        assertThat(fetchedPilot.getFirstName()).isEqualTo("Lewis");
+        assertThat(fetchedPilot.getTeam().getTeamName()).isEqualTo("Mercedes");
+    }
 
-        PilotRequest pilotRequest = new PilotRequest();
-        pilotRequest.setFirstName("Charles");
-        pilotRequest.setLastName("Leclerc");
-        pilotRequest.setCountry("Monaco");
-        pilotRequest.setBirthDate(LocalDate.of(1997, 10, 16));
-        pilotRequest.setCarNumber(16);
-        pilotRequest.setTeamId(savedTeam.getTeamId());
+    @Test
+    void testUpdatePilot() {
+        f1_team team = createTeam("Red Bull");
+        f1_pilot pilot = pilotService.savePilot(createPilotRequest("Max", "Verstappen", team.getTeamId()));
 
-        f1_pilot savedPilot = pilotService.savePilot(pilotRequest);
+        PilotRequest updateRequest = createPilotRequest("Max", "Updated", team.getTeamId());
+        f1_pilot updatedPilot = pilotService.updatePilot(pilot.getPilotId(), updateRequest);
 
-        assertThat(savedPilot.getPilotId()).isNotNull();
-        assertThat(savedPilot.getFirstName()).isEqualTo("Charles");
-        assertThat(savedPilot.getLastName()).isEqualTo("Leclerc");
-        assertThat(savedPilot.getNationality()).isEqualTo("Monaco");
-        assertThat(savedPilot.getBirthDate()).isEqualTo(LocalDate.of(1997, 10, 16));
-        assertThat(savedPilot.getCarNumber()).isEqualTo(16);
-        assertThat(savedPilot.getTeam().getTeamName()).isEqualTo("Ferrari");
+        assertThat(updatedPilot.getLastName()).isEqualTo("Updated");
+    }
+
+    @Test
+    void testDeletePilot() {
+        f1_team team = createTeam("Ferrari");
+        f1_pilot pilot = pilotService.savePilot(createPilotRequest("Charles", "Leclerc", team.getTeamId()));
+
+        pilotService.deletePilotById(pilot.getPilotId());
+        List<f1_pilot> pilots = pilotService.getAllPilots();
+        assertThat(pilots).extracting(f1_pilot::getFirstName).doesNotContain("Charles");
+    }
+
+    @Test
+    void testGetAllPilots() {
+        f1_team team = createTeam("McLaren");
+        pilotService.savePilot(createPilotRequest("Lando", "Norris", team.getTeamId()));
+        pilotService.savePilot(createPilotRequest("Daniel", "Ricciardo", team.getTeamId()));
+
+        List<f1_pilot> pilots = pilotService.getAllPilots();
+        assertThat(pilots).extracting(f1_pilot::getFirstName).contains("Lando", "Daniel");
     }
 }

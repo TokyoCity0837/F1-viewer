@@ -18,14 +18,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 class f1_teamControllerTest {
 
     @Mock
-    private f1_teamService teamService; 
+    private f1_teamService teamService;
 
     @InjectMocks
-    private f1_teamController controller; 
+    private f1_teamController controller;
 
     @BeforeEach
     void setUp() {
-        MockitoAnnotations.openMocks(this); 
+        MockitoAnnotations.openMocks(this);
     }
 
     @Test
@@ -33,11 +33,8 @@ class f1_teamControllerTest {
         f1_team team1 = new f1_team();
         f1_team team2 = new f1_team();
         List<f1_team> mockList = Arrays.asList(team1, team2);
-
         when(teamService.getAllTeams()).thenReturn(mockList);
-
         List<f1_team> result = controller.getAllTeams();
-
         assertThat(result).hasSize(2);
         verify(teamService, times(1)).getAllTeams();
     }
@@ -46,9 +43,7 @@ class f1_teamControllerTest {
     void testGetTeamById() {
         f1_team team = new f1_team();
         when(teamService.getTeamById(1)).thenReturn(team);
-
         f1_team result = controller.getTeamById(1);
-
         assertThat(result).isNotNull();
         verify(teamService, times(1)).getTeamById(1);
     }
@@ -58,9 +53,7 @@ class f1_teamControllerTest {
         TeamRequest request = new TeamRequest();
         f1_team team = new f1_team();
         when(teamService.saveTeam(request)).thenReturn(team);
-
         f1_team result = controller.createTeam(request);
-
         assertThat(result).isNotNull();
         verify(teamService, times(1)).saveTeam(request);
     }
@@ -70,9 +63,7 @@ class f1_teamControllerTest {
         TeamRequest request = new TeamRequest();
         f1_team team = new f1_team();
         when(teamService.updateTeam(1, request)).thenReturn(team);
-
         f1_team result = controller.updateTeam(1, request);
-
         assertThat(result).isNotNull();
         verify(teamService, times(1)).updateTeam(1, request);
     }
@@ -80,9 +71,44 @@ class f1_teamControllerTest {
     @Test
     void testDeleteTeamById() {
         doNothing().when(teamService).deleteTeamById(1);
-
         controller.deleteTeamById(1);
-
         verify(teamService, times(1)).deleteTeamById(1);
+    }
+
+    @Test
+    void testFetchingCreate() {
+        TeamRequest request = new TeamRequest();
+        f1_team team = new f1_team();
+        when(teamService.saveTeam(request)).thenReturn(team);
+        f1_team created = controller.createTeam(request);
+        when(teamService.getTeamById(1)).thenReturn(created);
+        f1_team fetched = controller.getTeamById(1);
+        assertThat(fetched).isEqualTo(created);
+        verify(teamService, times(1)).saveTeam(request);
+        verify(teamService, times(1)).getTeamById(1);
+    }
+
+    @Test
+    void testFetchingUpdate() {
+        TeamRequest request = new TeamRequest();
+        f1_team updatedTeam = new f1_team();
+        when(teamService.updateTeam(1, request)).thenReturn(updatedTeam);
+        f1_team result = controller.updateTeam(1, request);
+        when(teamService.getTeamById(1)).thenReturn(updatedTeam);
+        f1_team fetched = controller.getTeamById(1);
+        assertThat(result).isEqualTo(fetched);
+        verify(teamService, times(1)).updateTeam(1, request);
+        verify(teamService, times(1)).getTeamById(1);
+    }
+
+    @Test
+    void testVerefiedDeleting() {
+        doNothing().when(teamService).deleteTeamById(1);
+        controller.deleteTeamById(1);
+        when(teamService.getAllTeams()).thenReturn(Arrays.asList());
+        List<f1_team> teams = controller.getAllTeams();
+        assertThat(teams).isEmpty();
+        verify(teamService, times(1)).deleteTeamById(1);
+        verify(teamService, times(1)).getAllTeams();
     }
 }
