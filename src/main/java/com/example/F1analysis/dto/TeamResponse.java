@@ -1,4 +1,4 @@
-package com.example.F1analysis.dto;
+package com.example.f1analysis.dto;
 
 public class TeamResponse {
     private int id;

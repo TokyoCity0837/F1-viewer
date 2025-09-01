@@ -1,9 +1,5 @@
 package com.example.F1analysis.IntegrationTests;
 
-import com.example.F1analysis.F1AnalysisApplication;
-import com.example.F1analysis.dto.TeamRequest;
-import com.example.F1analysis.model.f1_team;
-import com.example.F1analysis.service.f1_teamService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -13,6 +9,11 @@ import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.containers.MySQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
+
+import com.example.f1analysis.F1AnalysisApplication;
+import com.example.f1analysis.dto.TeamRequest;
+import com.example.f1analysis.model.Team;
+import com.example.f1analysis.service.TeamService;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -37,7 +38,7 @@ public class f1_teamServiceIntegrationTest {
     }
 
     @Autowired
-    private f1_teamService teamService;
+    private TeamService teamService;
 
     @Test
     void testSaveTeamViaService() {
@@ -48,7 +49,7 @@ public class f1_teamServiceIntegrationTest {
         request.setTeamFoundation(1954);
         request.setTeamChampionships(9);
 
-        f1_team savedTeam = teamService.saveTeam(request);
+        Team savedTeam = teamService.saveTeam(request);
 
         assertThat(savedTeam.getTeamId()).isNotNull();
         assertThat(savedTeam.getTeamName()).isEqualTo("Mercedes");
@@ -67,7 +68,7 @@ public class f1_teamServiceIntegrationTest {
         request.setTeamFoundation(1984);
         request.setTeamChampionships(6);
 
-        f1_team savedTeam = teamService.saveTeam(request);
+        Team savedTeam = teamService.saveTeam(request);
 
         TeamRequest updateRequest = new TeamRequest();
         updateRequest.setTeamName("Red Bull Racing");
@@ -76,7 +77,7 @@ public class f1_teamServiceIntegrationTest {
         updateRequest.setTeamFoundation(1984);
         updateRequest.setTeamChampionships(7);
 
-        f1_team updatedTeam = teamService.updateTeam(savedTeam.getTeamId(), updateRequest);
+        Team updatedTeam = teamService.updateTeam(savedTeam.getTeamId(), updateRequest);
 
         assertThat(updatedTeam.getTeamName()).isEqualTo("Red Bull Racing");
         assertThat(updatedTeam.getTeamChampionships()).isEqualTo(7);
@@ -91,7 +92,7 @@ public class f1_teamServiceIntegrationTest {
         request.setTeamFoundation(1911);
         request.setTeamChampionships(2);
 
-        f1_team savedTeam = teamService.saveTeam(request);
+        Team savedTeam = teamService.saveTeam(request);
 
         teamService.deleteTeamById(savedTeam.getTeamId());
 

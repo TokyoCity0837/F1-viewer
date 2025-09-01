@@ -1,9 +1,9 @@
-package com.example.F1analysis.model;
+package com.example.f1analysis.model;
 import jakarta.persistence.*;
 
 @Entity
 @Table(name = "f1_teams")
-public class f1_team {
+public class Team {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,10 +24,10 @@ public class f1_team {
     @Column(name = "team_championships", columnDefinition = "int default 0")
     private int teamChampionships;
 
-    public f1_team() {}
+    public Team() {}
 
 
-    public f1_team(String teamName, String baseCountry, String teamPrinciple, int teamFoundation, int teamChampionships) {
+    public Team(String teamName, String baseCountry, String teamPrinciple, int teamFoundation, int teamChampionships) {
         this.teamName = teamName;
         this.baseCountry = baseCountry;
         this.teamPrinciple = teamPrinciple;

@@ -1,13 +1,15 @@
 package com.example.F1analysis.controller;
 
-import com.example.F1analysis.dto.PilotRequest;
-import com.example.F1analysis.model.f1_pilot;
-import com.example.F1analysis.service.f1_pilotService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+
+import com.example.f1analysis.controller.PilotController;
+import com.example.f1analysis.dto.PilotRequest;
+import com.example.f1analysis.model.Pilot;
+import com.example.f1analysis.service.PilotService;
 
 import java.util.Arrays;
 import java.util.List;
@@ -15,13 +17,13 @@ import java.util.List;
 import static org.mockito.Mockito.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
-class f1_pilotControllerTest {
+class PilotControllerTest {
 
     @Mock
-    private f1_pilotService pilotService;
+    private PilotService pilotService;
 
     @InjectMocks
-    private f1_pilotController controller;
+    private PilotController controller;
 
     @BeforeEach
     void setUp() {
@@ -30,20 +32,20 @@ class f1_pilotControllerTest {
 
     @Test
     void testGetAllPilots() {
-        f1_pilot pilot1 = new f1_pilot();
-        f1_pilot pilot2 = new f1_pilot();
-        List<f1_pilot> mockList = Arrays.asList(pilot1, pilot2);
+        Pilot pilot1 = new Pilot();
+        Pilot pilot2 = new Pilot();
+        List<Pilot> mockList = Arrays.asList(pilot1, pilot2);
         when(pilotService.getAllPilots()).thenReturn(mockList);
-        List<f1_pilot> result = controller.getAllPilots();
+        List<Pilot> result = controller.getAllPilots();
         assertThat(result).hasSize(2);
         verify(pilotService, times(1)).getAllPilots();
     }
 
     @Test
     void testGetPilotById() {
-        f1_pilot pilot = new f1_pilot();
+        Pilot pilot = new Pilot();
         when(pilotService.getPilotById(1)).thenReturn(pilot);
-        f1_pilot result = controller.getPilotById(1);
+        Pilot result = controller.getPilotById(1);
         assertThat(result).isNotNull();
         verify(pilotService, times(1)).getPilotById(1);
     }
@@ -51,9 +53,9 @@ class f1_pilotControllerTest {
     @Test
     void testCreatePilot() {
         PilotRequest request = new PilotRequest();
-        f1_pilot pilot = new f1_pilot();
+        Pilot pilot = new Pilot();
         when(pilotService.savePilot(request)).thenReturn(pilot);
-        f1_pilot result = controller.createPilot(request);
+        Pilot result = controller.createPilot(request);
         assertThat(result).isNotNull();
         verify(pilotService, times(1)).savePilot(request);
     }
@@ -61,9 +63,9 @@ class f1_pilotControllerTest {
     @Test
     void testUpdatePilot() {
         PilotRequest request = new PilotRequest();
-        f1_pilot pilot = new f1_pilot();
+        Pilot pilot = new Pilot();
         when(pilotService.updatePilot(1, request)).thenReturn(pilot);
-        f1_pilot result = controller.updatePilot(1, request);
+        Pilot result = controller.updatePilot(1, request);
         assertThat(result).isNotNull();
         verify(pilotService, times(1)).updatePilot(1, request);
     }
@@ -78,11 +80,11 @@ class f1_pilotControllerTest {
     @Test
     void testFetchingPilotCreate() {
         PilotRequest request = new PilotRequest();
-        f1_pilot pilot = new f1_pilot();
+        Pilot pilot = new Pilot();
         when(pilotService.savePilot(request)).thenReturn(pilot);
-        f1_pilot created = controller.createPilot(request);
+        Pilot created = controller.createPilot(request);
         when(pilotService.getPilotById(1)).thenReturn(created);
-        f1_pilot fetched = controller.getPilotById(1);
+        Pilot fetched = controller.getPilotById(1);
         assertThat(fetched).isEqualTo(created);
         verify(pilotService, times(1)).savePilot(request);
         verify(pilotService, times(1)).getPilotById(1);
@@ -91,11 +93,11 @@ class f1_pilotControllerTest {
     @Test
     void testFetchingPilotUpdate() {
         PilotRequest request = new PilotRequest();
-        f1_pilot updatedPilot = new f1_pilot();
+        Pilot updatedPilot = new Pilot();
         when(pilotService.updatePilot(1, request)).thenReturn(updatedPilot);
-        f1_pilot result = controller.updatePilot(1, request);
+        Pilot result = controller.updatePilot(1, request);
         when(pilotService.getPilotById(1)).thenReturn(updatedPilot);
-        f1_pilot fetched = controller.getPilotById(1);
+        Pilot fetched = controller.getPilotById(1);
         assertThat(result).isEqualTo(fetched);
         verify(pilotService, times(1)).updatePilot(1, request);
         verify(pilotService, times(1)).getPilotById(1);
@@ -106,7 +108,7 @@ class f1_pilotControllerTest {
         doNothing().when(pilotService).deletePilotById(1);
         controller.deletePilotById(1);
         when(pilotService.getAllPilots()).thenReturn(Arrays.asList());
-        List<f1_pilot> pilots = controller.getAllPilots();
+        List<Pilot> pilots = controller.getAllPilots();
         assertThat(pilots).isEmpty();
         verify(pilotService, times(1)).deletePilotById(1);
         verify(pilotService, times(1)).getAllPilots();

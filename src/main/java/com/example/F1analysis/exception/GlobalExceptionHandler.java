@@ -1,12 +1,13 @@
-package com.example.F1analysis.exception;
+package com.example.f1analysis.exception;
 
-import com.example.F1analysis.dto.ErrorResponse;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+
+import com.example.f1analysis.dto.ErrorResponse;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;

@@ -1,4 +1,4 @@
-package com.example.F1analysis.model;
+package com.example.f1analysis.model;
 
 
 import java.time.LocalDate;
@@ -8,7 +8,7 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "f1_pilots")
 
-public class f1_pilot {
+public class Pilot {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,10 +31,10 @@ public class f1_pilot {
 
     @ManyToOne
     @JoinColumn(name = "team_id")
-    private f1_team team;
+    private Team team;
 
-    public f1_pilot(){};
-    public f1_pilot(String firstName, String lastName, String nationality, LocalDate birthDate, Integer number, f1_team team){
+    public Pilot(){};
+    public Pilot(String firstName, String lastName, String nationality, LocalDate birthDate, Integer number, Team team){
 
         this.firstName = firstName;
         this.lastName = lastName;
@@ -63,7 +63,7 @@ public class f1_pilot {
     public Integer getCarNumber() { return number; }
     public void setNumber(Integer number) { this.number = number; }
 
-    public f1_team getTeam() { return team; }
-    public void setTeam(f1_team team) { this.team = team; }
+    public Team getTeam() { return team; }
+    public void setTeam(Team team) { this.team = team; }
 
 }

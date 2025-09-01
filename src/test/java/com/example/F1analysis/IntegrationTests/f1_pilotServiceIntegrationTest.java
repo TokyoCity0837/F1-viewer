@@ -1,12 +1,5 @@
 package com.example.F1analysis.IntegrationTests;
 
-import com.example.F1analysis.F1AnalysisApplication;
-import com.example.F1analysis.dto.PilotRequest;
-import com.example.F1analysis.dto.TeamRequest;
-import com.example.F1analysis.model.f1_pilot;
-import com.example.F1analysis.model.f1_team;
-import com.example.F1analysis.service.f1_pilotService;
-import com.example.F1analysis.service.f1_teamService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -16,6 +9,14 @@ import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.containers.MySQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
+
+import com.example.f1analysis.F1AnalysisApplication;
+import com.example.f1analysis.dto.PilotRequest;
+import com.example.f1analysis.dto.TeamRequest;
+import com.example.f1analysis.model.Pilot;
+import com.example.f1analysis.model.Team;
+import com.example.f1analysis.service.PilotService;
+import com.example.f1analysis.service.TeamService;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -43,12 +44,12 @@ public class f1_pilotServiceIntegrationTest {
     }
 
     @Autowired
-    private f1_pilotService pilotService;
+    private PilotService pilotService;
 
     @Autowired
-    private f1_teamService teamService;
+    private TeamService teamService;
 
-    private f1_team createTeam(String name) {
+    private Team createTeam(String name) {
         TeamRequest request = new TeamRequest();
         request.setTeamName(name);
         request.setBaseCountry("UK");
@@ -71,43 +72,43 @@ public class f1_pilotServiceIntegrationTest {
 
     @Test
     void testCreateAndGetPilot() {
-        f1_team team = createTeam("Mercedes");
+        Team team = createTeam("Mercedes");
         PilotRequest request = createPilotRequest("Lewis", "Hamilton", team.getTeamId());
-        f1_pilot savedPilot = pilotService.savePilot(request);
+        Pilot savedPilot = pilotService.savePilot(request);
 
-        f1_pilot fetchedPilot = pilotService.getPilotById(savedPilot.getPilotId());
+        Pilot fetchedPilot = pilotService.getPilotById(savedPilot.getPilotId());
         assertThat(fetchedPilot.getFirstName()).isEqualTo("Lewis");
         assertThat(fetchedPilot.getTeam().getTeamName()).isEqualTo("Mercedes");
     }
 
     @Test
     void testUpdatePilot() {
-        f1_team team = createTeam("Red Bull");
-        f1_pilot pilot = pilotService.savePilot(createPilotRequest("Max", "Verstappen", team.getTeamId()));
+        Team team = createTeam("Red Bull");
+        Pilot pilot = pilotService.savePilot(createPilotRequest("Max", "Verstappen", team.getTeamId()));
 
         PilotRequest updateRequest = createPilotRequest("Max", "Updated", team.getTeamId());
-        f1_pilot updatedPilot = pilotService.updatePilot(pilot.getPilotId(), updateRequest);
+        Pilot updatedPilot = pilotService.updatePilot(pilot.getPilotId(), updateRequest);
 
         assertThat(updatedPilot.getLastName()).isEqualTo("Updated");
     }
 
     @Test
     void testDeletePilot() {
-        f1_team team = createTeam("Ferrari");
-        f1_pilot pilot = pilotService.savePilot(createPilotRequest("Charles", "Leclerc", team.getTeamId()));
+        Team team = createTeam("Ferrari");
+        Pilot pilot = pilotService.savePilot(createPilotRequest("Charles", "Leclerc", team.getTeamId()));
 
         pilotService.deletePilotById(pilot.getPilotId());
-        List<f1_pilot> pilots = pilotService.getAllPilots();
-        assertThat(pilots).extracting(f1_pilot::getFirstName).doesNotContain("Charles");
+        List<Pilot> pilots = pilotService.getAllPilots();
+        assertThat(pilots).extracting(Pilot::getFirstName).doesNotContain("Charles");
     }
 
     @Test
     void testGetAllPilots() {
-        f1_team team = createTeam("McLaren");
+        Team team = createTeam("McLaren");
         pilotService.savePilot(createPilotRequest("Lando", "Norris", team.getTeamId()));
         pilotService.savePilot(createPilotRequest("Daniel", "Ricciardo", team.getTeamId()));
 
-        List<f1_pilot> pilots = pilotService.getAllPilots();
-        assertThat(pilots).extracting(f1_pilot::getFirstName).contains("Lando", "Daniel");
+        List<Pilot> pilots = pilotService.getAllPilots();
+        assertThat(pilots).extracting(Pilot::getFirstName).contains("Lando", "Daniel");
     }
 }
