@@ -20,7 +20,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest(classes = F1AnalysisApplication.class)
 @ActiveProfiles("test")
 @Testcontainers
-public class f1_teamServiceIntegrationTest {
+public class TeamServiceIntegrationTest {
 
     @Container
     @SuppressWarnings("resource")
