@@ -6,7 +6,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import com.example.f1analysis.controller.PilotController;
 import com.example.f1analysis.dto.PilotRequest;
 import com.example.f1analysis.model.Pilot;
 import com.example.f1analysis.service.PilotService;

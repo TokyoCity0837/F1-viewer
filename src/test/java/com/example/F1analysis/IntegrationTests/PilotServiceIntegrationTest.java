@@ -1,4 +1,4 @@
-package com.example.F1analysis.IntegrationTests;
+package com.example.f1analysis.IntegrationTests;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

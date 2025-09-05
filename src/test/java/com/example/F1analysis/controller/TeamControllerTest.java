@@ -5,8 +5,6 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-
-import com.example.f1analysis.controller.TeamController;
 import com.example.f1analysis.dto.TeamRequest;
 import com.example.f1analysis.model.Team;
 import com.example.f1analysis.service.TeamService;
