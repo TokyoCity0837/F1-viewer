@@ -1,4 +1,4 @@
-package com.example.F1analysis.controller;
+package com.example.f1analysis.controller;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

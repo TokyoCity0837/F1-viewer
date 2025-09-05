@@ -1,4 +1,4 @@
-package com.example.F1analysis;
+package com.example.f1analysis;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
